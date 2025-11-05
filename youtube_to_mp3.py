@@ -11,13 +11,14 @@ from pathlib import Path
 import yt_dlp
 
 
-def download_youtube_to_mp3(url, output_path="downloads"):
+def download_youtube_to_mp3(url, output_path="downloads", no_check_certificate=False):
     """
     Tải video YouTube và chuyển đổi sang MP3
 
     Args:
         url (str): Link YouTube cần tải
         output_path (str): Thư mục lưu file MP3
+        no_check_certificate (bool): Bỏ qua kiểm tra SSL certificate (dùng khi gặp lỗi SSL)
 
     Returns:
         str: Đường dẫn đến file MP3 đã tải
@@ -37,6 +38,11 @@ def download_youtube_to_mp3(url, output_path="downloads"):
         'quiet': False,
         'no_warnings': False,
     }
+
+    # Thêm option bỏ qua SSL certificate nếu cần (cho macOS)
+    if no_check_certificate:
+        ydl_opts['nocheckcertificate'] = True
+        print("⚠️  Đã bỏ qua kiểm tra SSL certificate")
 
     try:
         print(f"\n🎵 Đang tải video từ: {url}")
@@ -78,6 +84,7 @@ def main():
 Ví dụ:
   python youtube_to_mp3.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
   python youtube_to_mp3.py "https://youtu.be/dQw4w9WgXcQ" -o my_music
+  python youtube_to_mp3.py "https://youtu.be/dQw4w9WgXcQ" --no-check-certificate
         """
     )
 
@@ -92,6 +99,12 @@ Ví dụ:
         help='Thư mục lưu file MP3 (mặc định: downloads)'
     )
 
+    parser.add_argument(
+        '--no-check-certificate',
+        action='store_true',
+        help='Bỏ qua kiểm tra SSL certificate (dùng khi gặp lỗi SSL trên macOS)'
+    )
+
     args = parser.parse_args()
 
     # Kiểm tra URL
@@ -100,7 +113,7 @@ Ví dụ:
         sys.exit(1)
 
     # Tải và chuyển đổi
-    result = download_youtube_to_mp3(args.url, args.output)
+    result = download_youtube_to_mp3(args.url, args.output, args.no_check_certificate)
 
     if result:
         sys.exit(0)

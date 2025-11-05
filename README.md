@@ -79,6 +79,7 @@ python youtube_to_mp3.py --help
 
 - `url`: Link YouTube cần tải (bắt buộc)
 - `-o, --output`: Thư mục lưu file MP3 (mặc định: `downloads`)
+- `--no-check-certificate`: Bỏ qua kiểm tra SSL certificate (dùng khi gặp lỗi SSL)
 - `-h, --help`: Hiển thị hướng dẫn
 
 ## Lưu ý
@@ -92,6 +93,31 @@ python youtube_to_mp3.py --help
 **Lỗi "ffmpeg not found":**
 - Cài đặt FFmpeg theo hướng dẫn ở trên
 - Đảm bảo FFmpeg có trong PATH
+
+**Lỗi "SSL: CERTIFICATE_VERIFY_FAILED" (phổ biến trên macOS):**
+
+Cách 1 - Sử dụng option bỏ qua SSL (nhanh nhất):
+```bash
+python youtube_to_mp3.py "LINK_YOUTUBE" --no-check-certificate
+```
+
+Cách 2 - Cài đặt certificates (khuyến khích):
+```bash
+# Với Anaconda/Miniconda:
+conda update certifi
+conda install -c conda-forge certifi
+
+# Với pip:
+pip install --upgrade certifi
+
+# Nếu dùng Python từ python.org:
+/Applications/Python*/Install\ Certificates.command
+```
+
+Cách 3 - Update yt-dlp:
+```bash
+pip install --upgrade yt-dlp
+```
 
 **Lỗi "Unable to extract":**
 - Kiểm tra URL YouTube có hợp lệ không
