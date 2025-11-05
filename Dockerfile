@@ -24,5 +24,8 @@ RUN mkdir -p downloads
 # Expose port
 EXPOSE 8000
 
+# Set environment variable for port (can be overridden)
+ENV PORT=8000
+
 # Run the API server
-CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD uvicorn api:app --host 0.0.0.0 --port ${PORT}
