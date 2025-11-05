@@ -1,1 +1,8 @@
+# YouTube downloader
 yt-dlp>=2023.10.13
+
+# API Server
+fastapi>=0.104.1
+uvicorn[standard]>=0.24.0
+pydantic>=2.5.0
+python-multipart>=0.0.6

@@ -45,3 +45,10 @@ downloads/
 *.mp4
 *.webm
 *.m4a
+
+# Docker
+.dockerignore
+
+# Environment
+.env
+.env.local
